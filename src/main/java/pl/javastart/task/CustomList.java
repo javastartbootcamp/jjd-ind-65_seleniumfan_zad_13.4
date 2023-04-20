@@ -17,18 +17,14 @@ public class CustomList<E> {
         if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
             elementData = Arrays.copyOf(elementData, DEFAULT_CAPACITY);
         }
-        if (elementData.length == size) {
-            elementData = Arrays.copyOf(elementData, size * 2);
-        }
+        increaseArrayIfNecessary();
 
         elementData[size] = element;
         size++;
     }
 
     public boolean add(int index, E element) {
-        if (elementData.length == size) {
-            elementData = Arrays.copyOf(elementData, size * 2);
-        }
+        increaseArrayIfNecessary();
         elementData = Arrays.copyOf(elementData, size + 1);
         System.arraycopy(elementData, index, elementData, index + 1, size - index);
         elementData[index] = element;
@@ -66,6 +62,12 @@ public class CustomList<E> {
             }
         }
         return "[" + elements + "]";
+    }
+
+    private void increaseArrayIfNecessary() {
+        if (elementData.length == size) {
+            elementData = Arrays.copyOf(elementData, size * 2);
+        }
     }
 
     private void verifyIndex(int index) {
